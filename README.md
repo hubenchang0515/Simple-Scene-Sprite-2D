@@ -1,5 +1,6 @@
 # Simple-Scene-Sprite-2D
 A minimum game engine based on SDL2
+* ALPHA version now , cannot work.
 
 ## Getting Start
 ### Install dependent library
@@ -41,7 +42,7 @@ g++ -o demo demo.cpp -lsss2d -std=c++11 -lsss2d -lSDL2 -lSDL2_image -lSDL2_ttf
 ![image](https://github.com/hubenchang0515/Simple-Scene-Sprite-2D/blob/master/demo.png?raw=true)
 
 ## Log
-### 2017-7-12 : Create Project  
+### 2017-7-12 : Alpha 0.1
 * Add File : SSS_Base.h
 * Add File : SSS_Application.h  
 * Add File : SSS_Scene.h
