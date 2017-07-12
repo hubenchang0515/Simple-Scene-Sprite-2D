@@ -12,7 +12,7 @@ SSS_Sprite.o : SSS_Sprite.cpp SSS_Application.h SSS_Scene.h SSS_Sprite.h SSS_Bas
 clean:
 	rm *.o	
 	
-install:
+install: libsss2d.a
 	mkdir -p /usr/include/sss2d
 	cp *.h /usr/include/sss2d
 	cp libsss2d.a /usr/local/lib
