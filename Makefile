@@ -13,6 +13,6 @@ clean:
 	rm *.o	
 	
 install:
-	mkdir /usr/include/sss2d
+	mkdir -p /usr/include/sss2d
 	cp *.h /usr/include/sss2d
 	cp libsss2d.a /usr/local/lib
