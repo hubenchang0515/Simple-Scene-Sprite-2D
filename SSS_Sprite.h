@@ -1,7 +1,5 @@
 /*
  *  File    : SSS_Sprite.h
- *  Version : alpha 0.1
- *  Date    : 2017-7-12
  *  Author  : Plan C
  *  Blog    : blog.kurukurumi.com
  *  E-mail  : hubenchang0515@outlook.com
@@ -9,14 +7,14 @@
 #ifndef SSS_SPRITE_H
 #define SSS_SPRITE_H
 
-
-#include <list>
+#include <string>
 
 #include "SSS_Base.h"
 #include "SSS_Scene.h"
 
 namespace sss2d{
 
+/* Super Class of All Sprite */
 class AbstractSprite
 {
 public:
@@ -34,7 +32,7 @@ private:
 };
 
 
-
+/* Rectangle Color Lump Sprit */
 class AreaSprite : public AbstractSprite
 {
 public:
@@ -44,12 +42,45 @@ public:
     virtual void draw();
     
     void setArea(Area area);
+    void setArea(int x,int y,int w,int h);
     void setColor(Color color);
+    void setColor(Uint8 r,Uint8 g,Uint8 b,Uint8 a);
 
 private:
     Area area_;
     Color color_;
 };
+
+
+/* Sprite of Text */
+class TextSprite : public AbstractSprite
+{
+public:
+	static void setFont(std::string file);
+	static void setFontSize(size_t size);
+	
+	TextSprite(AbstractScene* scene  = nullptr);
+	
+	virtual void update();
+	virtual void draw();
+	
+	void setText(std::string text);
+	void setPosition(Position position);
+	void setPosition(int x,int y);
+	void setColor(Color color);
+	void setColor(Uint8 r,Uint8 g,Uint8 b,Uint8 a);
+	
+private:
+	Position position_;
+	Color color_;
+	Texture* texture_;
+	std::string text_;
+	
+	static TTF_Font* font_;
+	static std::string fontFile_;
+	static size_t fontSize_;
+};
+
 
 };// namespace sss2d
 

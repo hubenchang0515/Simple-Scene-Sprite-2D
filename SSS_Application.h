@@ -1,7 +1,5 @@
 /*
  *  File    : SSS_Application.h
- *  Version : alpha 0.1
- *  Date    : 2017-7-10
  *  Author  : Plan C
  *  Blog    : blog.kurukurumi.com
  *  E-mail  : hubenchang0515@outlook.com

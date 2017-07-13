@@ -1,7 +1,5 @@
 /*
  *  File    : SSS_Application.cpp
- *  Version : alpha 0.1
- *  Date    : 2017-7-10
  *  Author  : Plan C
  *  Blog    : blog.kurukurumi.com
  *  E-mail  : hubenchang0515@outlook.com
@@ -10,9 +8,6 @@
 #include "SSS_Application.h"
 
 /* simplify */
-#define SDL_THROW() (throw std::runtime_error(SDL_GetError()))
-#define IMG_THROW() (throw std::runtime_error(IMG_GetError()))
-#define TTF_THROW() (throw std::runtime_error(TTF_GetError()))
 #define IMG_INIT_EVERYTHING (IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF)
 
 namespace sss2d{
@@ -45,6 +40,10 @@ Application::Application(std::string title,int width,int height)
     }
     
     this->renderer_ = SDL_CreateRenderer(this->window_,-1,SDL_RENDERER_ACCELERATED);
+    if(this->renderer_ == nullptr)
+    {
+        this->renderer_ = SDL_CreateRenderer(this->window_,-1,0);
+    }
     if(this->renderer_ == nullptr)
     {
         SDL_THROW();

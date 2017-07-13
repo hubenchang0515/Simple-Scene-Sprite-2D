@@ -22,16 +22,18 @@ int main()
     Application app;
     Scene scene(&app);
     app.setScene(&scene);
-    AreaSprite rSprite(&scene);
-    rSprite.setArea({app.width()/2 -100,app.height()/2 -100,200,200});
-    rSprite.setColor({0xff,0,0,0xff});
-    AreaSprite gSprite(&scene);
-    gSprite.setArea({app.width()/2 -70,app.height()/2 -70,140,140});
-    gSprite.setColor({0,0xff,0,0xff});
-    AreaSprite bSprite(&scene);   
-    bSprite.setArea({app.width()/2 -50,app.height()/2 -50,100,100});
-    bSprite.setColor({0,0,0xff,0xff});
-    app.start();
+    
+    /* Use static function to set font*/
+    TextSprite::setFont("wqy-zenhei.ttc");
+    TextSprite::setFontSize(24);
+    
+    TextSprite text(&scene);
+    text.setText("Simple Scene Sprite 2D");
+    text.setColor(0x00,0xff,0x00,0xff);
+    text.setPosition(app.width()/2 , app.height()/2);
+    app.start(60);
+    
+    
 }
 ```
 ### Compile
@@ -42,12 +44,33 @@ g++ -o demo demo.cpp -lsss2d -std=c++11 -lsss2d -lSDL2 -lSDL2_image -lSDL2_ttf
 ![image](https://github.com/hubenchang0515/Simple-Scene-Sprite-2D/blob/master/demo.png?raw=true)
 
 ## Log
+---
+### 2017-7-13 : Alpha 0.2
+Add class TextSprile,which is used to show text.
+
+#### Update File
+* Sprite.h
+* Sprite.cpp
+
+#### Add Class
+* TextSprite
+---
 ### 2017-7-12 : Alpha 0.1
-* Add File : SSS_Base.h
-* Add File : SSS_Application.h  
-* Add File : SSS_Scene.h
-* Add File : SSS_Sprite.h
-* Add File : SSS_Application.cpp  
-* Add File : SSS_Scene.cpp
-* Add File : SSS_Sprite.cpp
-* Add File : sss2d.h
+Create Project  
+
+#### Add File
+* Application.h  
+* Application.cpp  
+* Scene.h  
+* Scene.cpp  
+* Sprite.h  
+* Sprite.cpp  
+* sss2d.h  
+  
+#### Add Class   
+* Application    
+* AbstactScene  
+* Scene  
+* AbstactSprite  
+* AreaSprite  
+---  

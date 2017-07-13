@@ -1,7 +1,5 @@
 /*
  *  File    : SSS_Scene.h
- *  Version : alpha 0.1
- *  Date    : 2017-7-11
  *  Author  : Plan C
  *  Blog    : blog.kurukurumi.com
  *  E-mail  : hubenchang0515@outlook.com

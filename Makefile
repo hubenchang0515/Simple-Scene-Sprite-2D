@@ -10,7 +10,7 @@ SSS_Sprite.o : SSS_Sprite.cpp SSS_Application.h SSS_Scene.h SSS_Sprite.h SSS_Bas
 	g++ -c SSS_Sprite.cpp -std=c++11 -fPIC
 
 clean:
-	rm *.o	
+	rm *.o libsss2d.a
 	
 install: libsss2d.a
 	mkdir -p /usr/include/sss2d
