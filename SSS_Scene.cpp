@@ -58,7 +58,7 @@ void AbstractScene::updateSprites()// final
     }
 }
 
-/* send event to sprites belong to this scene */
+/* send event to all sprites belong to this scene */
 void AbstractScene::sendEvent(SDL_Event event)// final
 {
     for(const auto& sprite : this->sprites_)
