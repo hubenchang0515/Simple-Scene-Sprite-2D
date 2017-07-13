@@ -20,6 +20,7 @@ class AbstractSprite
 public:
     AbstractSprite(AbstractScene* scene = nullptr);
 
+    virtual void dealEvent(SDL_Event event) = 0;
     virtual void update() = 0;
     virtual void draw() = 0;
     
@@ -38,6 +39,7 @@ class AreaSprite : public AbstractSprite
 public:
     AreaSprite(AbstractScene* scene = nullptr);
 
+    virtual void dealEvent(SDL_Event event);
     virtual void update();
     virtual void draw();
     
@@ -61,6 +63,7 @@ public:
 	
 	TextSprite(AbstractScene* scene  = nullptr);
 	
+	virtual void dealEvent(SDL_Event event);
 	virtual void update();
 	virtual void draw();
 	

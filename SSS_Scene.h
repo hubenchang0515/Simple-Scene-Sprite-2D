@@ -29,6 +29,8 @@ public:
     virtual void addSprite(AbstractSprite* sprite) final;
     virtual void removeSprite(std::list<AbstractSprite*>::iterator sprite) final;
     virtual void drawSprites() final;
+    virtual void updateSprites() final;
+    virtual void sendEvent(SDL_Event event) final;
 
 private:
     Application* const          application_;

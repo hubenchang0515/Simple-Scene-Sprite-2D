@@ -36,6 +36,11 @@ AreaSprite::AreaSprite(AbstractScene* scene)
     
 }
 
+void AreaSprite::dealEvent(SDL_Event event)
+{
+
+}
+
 void AreaSprite::update()
 {
 
@@ -109,6 +114,11 @@ TextSprite::TextSprite(AbstractScene* scene)
 	: AbstractSprite(scene)
 {
     this->texture_ = nullptr;
+}
+
+void TextSprite::dealEvent(SDL_Event event)
+{
+
 }
 
 void TextSprite::update()

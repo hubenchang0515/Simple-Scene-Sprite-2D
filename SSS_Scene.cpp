@@ -48,6 +48,24 @@ void AbstractScene::drawSprites() //final
         sprite->draw();
     }
 }
+
+/* update all sprites belong to this scene */
+void AbstractScene::updateSprites()// final
+{
+    for(const auto& sprite : this->sprites_)
+    {
+        sprite->update();
+    }
+}
+
+/* send event to sprites belong to this scene */
+void AbstractScene::sendEvent(SDL_Event event)// final
+{
+    for(const auto& sprite : this->sprites_)
+    {
+        sprite->dealEvent(event);
+    }
+}
 // } class AbstractScene
 
 // class Scene {
@@ -60,20 +78,19 @@ Scene::Scene(Application* app)
 
 bool Scene::dealEvent(SDL_Event event)
 {
-    SDL_Log("scene poll event\n");
+    sendEvent(event);
     return true;
 }
 
 bool Scene::update()
 {
-    SDL_Log("FPS : %lf\n",app()->realFps());
+    updateSprites();
     return true;
 }
 
 bool Scene::draw()
 {
     drawSprites();
-    
     return true;
 }
 
