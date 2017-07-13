@@ -7,7 +7,7 @@ A minimum game engine based on SDL2
 ```
 sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
 ```
-### Make
+### Install
 ```
 make & make install
 ```
