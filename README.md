@@ -43,31 +43,29 @@ g++ -o demo demo.cpp -lsss2d -std=c++11 -lsss2d -lSDL2 -lSDL2_image -lSDL2_ttf
 ### Run
 ![image](https://github.com/hubenchang0515/Simple-Scene-Sprite-2D/blob/master/demo.png?raw=true)
 
+## Class
+* Application    
+* AbstactScene  
+* Scene  
+* AbstactSprite  
+* AreaSprite  
+* TextSprite  
+
 ## Log
 ---
 ### 2017-7-13 : Alpha 0.2
-Add class TextSprile,which is used to show text.
+Add class TextSprile : Show text.  
+Add function AbstractScene::updateSprites : Update all sprites belong to this scene.  
+Add function AbstractScene::sendEvent : Send event to all sprites belong to this scene.  
 
-#### Update File
-* Sprite.h
-* Sprite.cpp
-
-#### Add Class
+#### New Class
 * TextSprite
+
 ---
 ### 2017-7-12 : Alpha 0.1
 Create Project  
 
-#### Add File
-* Application.h  
-* Application.cpp  
-* Scene.h  
-* Scene.cpp  
-* Sprite.h  
-* Sprite.cpp  
-* sss2d.h  
-  
-#### Add Class   
+#### New Class 
 * Application    
 * AbstactScene  
 * Scene  
