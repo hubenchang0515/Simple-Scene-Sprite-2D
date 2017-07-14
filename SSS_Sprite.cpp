@@ -117,7 +117,16 @@ TextSprite::TextSprite(AbstractScene* scene)
     this->texture_ = nullptr;
     this->font_ = defaultFont_;  // default font
     this->position_ = { app()->width()/2 , app()->height()/2 }; // default position
-    this->color_ = {0xff,0xff,0xff,0xff}; // default color is white
+    this->color_ = COLOR_WHITE; // default color is white
+}
+
+/* distructor */
+TextSprite::~TextSprite()
+{
+    if(this->font_ != TextSprite::defaultFont_)
+    {
+        TTF_CloseFont(this->font_);
+    }
 }
 
 /* deal event */

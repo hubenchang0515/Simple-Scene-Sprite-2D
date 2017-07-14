@@ -17,20 +17,46 @@ make & make install
 
 using namespace sss2d;
 
-int main()
+int main(int argc,char* argv[])
 {
+    /* Create Application and Scene */
     Application app;
     Scene scene(&app);
     app.setScene(&scene);
-    TextSprite text(&scene);
-    text.setFont("wqy-zenhei.ttc",24);
-    text.setText("Simple Scene Sprite 2D");
-    text.setColor(0x00,0xff,0x00);
-    text.setPosition(app.width()/2 , app.height()/2);
     
-    app.start(60);
+    /* Set default font and font size */
+    TextSprite::setDefaultFont("wqy-zenhei.ttc",24);
     
+    /* Create TextSprit */
+    TextSprite red(&scene),green(&scene),blue(&scene),yellow(&scene),purple(&scene),cyan(&scene);
     
+    /* Set text */
+    red.setText("Simple Scene Sprite 2D");
+    green.setText("Simple Scene Sprite 2D");
+    blue.setText("Simple Scene Sprite 2D");
+    yellow.setText("Simple Scene Sprite 2D");
+    purple.setText("Simple Scene Sprite 2D");
+    cyan.setText("Simple Scene Sprite 2D");
+    
+    /* Set color */
+    red.setColor(COLOR_RED);
+    green.setColor(COLOR_GREEN);
+    blue.setColor(COLOR_BLUE);
+    yellow.setColor(COLOR_YELLOW);
+    purple.setColor(COLOR_PURPLE);
+    cyan.setColor(COLOR_CYAN);
+    
+    /* Set position */
+    red.setPosition(app.width()/2 , app.height()/7);
+    green.setPosition(app.width()/2 , app.height()/7*2);
+    blue.setPosition(app.width()/2 , app.height()/7*3);
+    yellow.setPosition(app.width()/2 , app.height()/7*4);
+    purple.setPosition(app.width()/2 , app.height()/7*5);
+    cyan.setPosition(app.width()/2 , app.height()/7*6);
+    
+    /* Start application main loop */
+    app.start();
+      
 }
 ```
 ### Compile

@@ -62,6 +62,7 @@ public:
 	static void setDefaultFont(std::string fontFile,size_t size);
 	
 	TextSprite(AbstractScene* scene  = nullptr);
+	~TextSprite();
 	
 	virtual void dealEvent(SDL_Event event);
 	virtual void update();
