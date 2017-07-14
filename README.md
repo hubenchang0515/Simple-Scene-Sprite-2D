@@ -25,7 +25,7 @@ int main()
     TextSprite text(&scene);
     text.setFont("wqy-zenhei.ttc",24);
     text.setText("Simple Scene Sprite 2D");
-    text.setColor(0x00,0xff,0x00,0xff);
+    text.setColor(0x00,0xff,0x00);
     text.setPosition(app.width()/2 , app.height()/2);
     
     app.start(60);

@@ -72,7 +72,7 @@ public:
 	void setPosition(Position position);
 	void setPosition(int x,int y);
 	void setColor(Color color);
-	void setColor(Uint8 r,Uint8 g,Uint8 b,Uint8 a);
+	void setColor(Uint8 r,Uint8 g,Uint8 b,Uint8 a = 0xff);
 	
 private:
 	Position position_;
