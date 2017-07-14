@@ -56,7 +56,8 @@ int main(int argc,char* argv[])
     
     /* Start application main loop */
     app.start();
-      
+    
+    return 0;
 }
 ```
 ### Compile
