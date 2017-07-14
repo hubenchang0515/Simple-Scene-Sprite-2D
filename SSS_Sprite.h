@@ -24,6 +24,7 @@ public:
     virtual void update() = 0;
     virtual void draw() = 0;
     
+    virtual Application* app() final;
     virtual AbstractScene* scene() final;
     virtual Renderer* renderer() final;
 
@@ -58,8 +59,7 @@ private:
 class TextSprite : public AbstractSprite
 {
 public:
-	static void setFont(std::string file);
-	static void setFontSize(size_t size);
+	static void setDefaultFont(std::string fontFile,size_t size);
 	
 	TextSprite(AbstractScene* scene  = nullptr);
 	
@@ -67,6 +67,7 @@ public:
 	virtual void update();
 	virtual void draw();
 	
+	void setFont(std::string fontFile,size_t size);
 	void setText(std::string text);
 	void setPosition(Position position);
 	void setPosition(int x,int y);
@@ -75,13 +76,12 @@ public:
 	
 private:
 	Position position_;
+	Font* font_;
 	Color color_;
 	Texture* texture_;
 	std::string text_;
 	
-	static TTF_Font* font_;
-	static std::string fontFile_;
-	static size_t fontSize_;
+	static Font* defaultFont_;
 };
 
 

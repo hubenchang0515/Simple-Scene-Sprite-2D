@@ -22,15 +22,12 @@ int main()
     Application app;
     Scene scene(&app);
     app.setScene(&scene);
-    
-    /* Use static function to set font*/
-    TextSprite::setFont("wqy-zenhei.ttc");
-    TextSprite::setFontSize(24);
-    
     TextSprite text(&scene);
+    text.setFont("wqy-zenhei.ttc",24);
     text.setText("Simple Scene Sprite 2D");
     text.setColor(0x00,0xff,0x00,0xff);
     text.setPosition(app.width()/2 , app.height()/2);
+    
     app.start(60);
     
     
@@ -38,7 +35,7 @@ int main()
 ```
 ### Compile
 ```
-g++ -o demo demo.cpp -lsss2d -std=c++11 -lsss2d -lSDL2 -lSDL2_image -lSDL2_ttf
+g++ -o demo demo.cpp -std=c++11 -lsss2d -lSDL2 -lSDL2_image -lSDL2_ttf
 ```
 ### Run
 ![image](https://github.com/hubenchang0515/Simple-Scene-Sprite-2D/blob/master/demo.png?raw=true)
@@ -52,6 +49,13 @@ g++ -o demo demo.cpp -lsss2d -std=c++11 -lsss2d -lSDL2 -lSDL2_image -lSDL2_ttf
 * TextSprite  
 
 ## Log
+---
+### 2017-7-14 : Alpha 0.3
+Remove static function TextSprite::setFont  
+Remove static function TextSprite::setSize  
+Add static function TextSprite::setDefaultFont  
+Add function TextSprite::setFont  
+
 ---
 ### 2017-7-13 : Alpha 0.2
 Add class TextSprile : Show text.  

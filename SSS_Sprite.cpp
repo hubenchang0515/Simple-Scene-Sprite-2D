@@ -16,6 +16,12 @@ AbstractSprite::AbstractSprite(AbstractScene* scene)
     scene->addSprite(this);
 }
 
+/* get application */
+Application* AbstractSprite::app()// final
+{
+    return this->scene_->app();
+}
+
 /* get scene */
 AbstractScene* AbstractSprite::scene()// final
 {
@@ -30,33 +36,39 @@ Renderer* AbstractSprite::renderer()// final
 // } class AbstructSprite
 
 // class AreaSprite {
+/* constructor */
 AreaSprite::AreaSprite(AbstractScene* scene)
     : AbstractSprite(scene)
 {
     
 }
 
+/* deal the event */
 void AreaSprite::dealEvent(SDL_Event event)
 {
 
 }
 
+/* sprite update */
 void AreaSprite::update()
 {
 
 }
 
+/* draw sprite */
 void AreaSprite::draw()
 {
     setDrawColor(this->renderer(),this->color_);
     fillArea(this->renderer(),this->area_);
 }
 
+/* set rectangle of AreaSprie */
 void AreaSprite::setArea(Area area)
 {
     this->area_ = area;
 }
 
+/* set rectangle of AreaSprite */
 void AreaSprite::setArea(int x,int y,int w,int h)
 {
     this->area_.x = x;
@@ -65,11 +77,13 @@ void AreaSprite::setArea(int x,int y,int w,int h)
     this->area_.h = h;
 }
 
+/* set rectangle's color */
 void AreaSprite::setColor(Color color)
 {
     this->color_ = color;
 }
 
+/* set rectangle's color */
 void AreaSprite::setColor(Uint8 r,Uint8 g,Uint8 b,Uint8 a)
 {
     this->color_.r = r;
@@ -81,51 +95,44 @@ void AreaSprite::setColor(Uint8 r,Uint8 g,Uint8 b,Uint8 a)
 
 
 // class TextSprite {
-TTF_Font* TextSprite::font_ = nullptr;
-std::string TextSprite::fontFile_ = "";
-size_t TextSprite::fontSize_ = 16;
+/* static member variable default font */
+Font* TextSprite::defaultFont_ = nullptr;
 
-void TextSprite::setFont(std::string file)
+/* static member function set default font*/
+void TextSprite::setDefaultFont(std::string fontFile,size_t size)
 {
-	TTF_CloseFont(TextSprite::font_);
-	TextSprite::fontFile_ = file;
-	TextSprite::font_ = TTF_OpenFont(file.c_str(),
-								TextSprite::fontSize_);
-								
-	if(TextSprite::font_ == nullptr)
-	{
-		TTF_THROW();
-	}
-}
-
-void TextSprite::setFontSize(size_t size)
-{
-	TextSprite::fontSize_ = size;
-	TTF_CloseFont(TextSprite::font_);
-	TextSprite::font_ = TTF_OpenFont(TextSprite::fontFile_.c_str(),size);
+	TTF_CloseFont(TextSprite::defaultFont_);
+	TextSprite::defaultFont_ = TTF_OpenFont(fontFile.c_str(),size);
 	
-	if(TextSprite::font_ == nullptr)
+	if(TextSprite::defaultFont_ == nullptr)
 	{
 		TTF_THROW();
 	}
 }
 
+/* constructor */
 TextSprite::TextSprite(AbstractScene* scene)
 	: AbstractSprite(scene)
 {
     this->texture_ = nullptr;
+    this->font_ = defaultFont_;  // default font
+    this->position_ = { app()->width()/2 , app()->height()/2 }; // default position
+    this->color_ = {0xff,0xff,0xff,0xff}; // default color is white
 }
 
+/* deal event */
 void TextSprite::dealEvent(SDL_Event event)
 {
 
 }
 
+/* update sprite */
 void TextSprite::update()
 {
 
 }
 
+/* draw sprite */
 void TextSprite::draw()
 {
     if(this->texture_ != nullptr)
@@ -135,37 +142,71 @@ void TextSprite::draw()
 	}
 }
 
+/* set font */
+void TextSprite::setFont(std::string fontFile,size_t size)
+{
+    if(this->font_ != TextSprite::defaultFont_)
+    {
+        TTF_CloseFont(this->font_);
+    }
+    
+    this->font_ = TTF_OpenFont(fontFile.c_str(),size);
+    
+    if(this->font_ == nullptr)
+	{
+		TTF_THROW();
+	}
+}
+
+/* set text */
 void TextSprite::setText(std::string text)
 {
     this->text_ = text;
     SDL_DestroyTexture(this->texture_);
-	Surface* surface = TTF_RenderText_Blended(TextSprite::font_,
-	                                          text.c_str(),this->color_);
+   
+	Surface* surface = renderText(this->font_,this->text_.c_str(),this->color_);
+	
 	this->texture_ = SDL_CreateTextureFromSurface(this->renderer(),surface);
+	
+	if(this->texture_ == NULL)
+	{
+	    SDL_THROW();
+	}
+	
 	SDL_FreeSurface(surface);
 }
 
+/* set center point position */
 void TextSprite::setPosition(Position center)
 {
 	this->position_ = center;
 }
 
+/* set center point position */
 void TextSprite::setPosition(int x,int y)
 {
     this->position_.x = x;
     this->position_.y = y;
 }
 
+/* set text color */
 void TextSprite::setColor(Color color)
 {
 	this->color_ = color;
 	SDL_DestroyTexture(this->texture_);
-	Surface* surface = TTF_RenderUTF8_Blended(TextSprite::font_,
-	                                          this->text_.c_str(),this->color_);
+	Surface* surface = renderText(this->font_,this->text_.c_str(),this->color_);
+	
 	this->texture_ = SDL_CreateTextureFromSurface(this->renderer(),surface);
+	
+	if(this->texture_ == NULL)
+	{
+	    SDL_THROW();
+	}
+	
 	SDL_FreeSurface(surface);
 }
 
+/* set text color */
 void TextSprite::setColor(Uint8 r,Uint8 g,Uint8 b,Uint8 a)
 {
     this->color_.r = r;
@@ -174,9 +215,15 @@ void TextSprite::setColor(Uint8 r,Uint8 g,Uint8 b,Uint8 a)
     this->color_.a = a;
     
     SDL_DestroyTexture(this->texture_);
-	Surface* surface = TTF_RenderUTF8_Blended(TextSprite::font_,
-	                                          this->text_.c_str(),this->color_);
+	Surface* surface = renderText(this->font_,this->text_.c_str(),this->color_);
+	
 	this->texture_ = SDL_CreateTextureFromSurface(this->renderer(),surface);
+	
+	if(this->texture_ == NULL)
+	{
+	    SDL_THROW();
+	}
+	
 	SDL_FreeSurface(surface);
 }
 // } class TextSprite

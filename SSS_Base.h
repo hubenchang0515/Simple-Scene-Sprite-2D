@@ -11,6 +11,7 @@
 #include <cstdint>
 #include <cstddef>
 
+#include <memory>
 #include <stdexcept>
 
 #include <SDL2/SDL.h>
@@ -32,6 +33,7 @@ typedef SDL_mutex       Mutex;
 typedef SDL_Point       Position;
 typedef SDL_Rect        Area;
 typedef SDL_Color       Color;
+typedef TTF_Font        Font;
 
 
 class Application;
@@ -54,6 +56,15 @@ inline void drawTexture(Renderer* renderer,Texture* texture,Position center)
 	SDL_QueryTexture(texture,NULL,NULL,&w,&h);
 	Area area = {center.x - w/2, center.y - h/2, w, h};
 	SDL_RenderCopy(renderer,texture,NULL,&area);
+}
+
+inline Surface* renderText(Font* font,std::string text,Color color)
+{
+    if(font == NULL)
+    {
+        throw std::runtime_error("Font is nullptr.\n");
+    }
+    return TTF_RenderUTF8_Blended(font,text.c_str(),color);
 }
 
 };// namespace sss2d
