@@ -17,6 +17,7 @@ namespace sss2d{
 
 class AbstractScene
 {
+    friend class AbstractSprite;
 public:
     AbstractScene(Application* app = nullptr);
     
@@ -26,8 +27,6 @@ public:
     
     virtual Renderer* renderer() final;
     virtual Application* app() final;
-    virtual void addSprite(AbstractSprite* sprite) final;
-    virtual void removeSprite(std::list<AbstractSprite*>::iterator sprite) final;
     virtual void drawSprites() final;
     virtual void updateSprites() final;
     virtual void sendEvent(SDL_Event event) final;
@@ -35,6 +34,9 @@ public:
 private:
     Application* const          application_;
     std::list<AbstractSprite*>  sprites_; 
+    
+    virtual void addSprite(AbstractSprite* sprite) final;
+    virtual void removeSprite(AbstractSprite* sprite) final;
 };
 
 class Scene : public AbstractScene

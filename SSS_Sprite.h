@@ -8,6 +8,7 @@
 #define SSS_SPRITE_H
 
 #include <string>
+#include <list>
 
 #include "SSS_Base.h"
 #include "SSS_Scene.h"
@@ -19,11 +20,13 @@ class AbstractSprite
 {
 public:
     AbstractSprite(AbstractScene* scene = nullptr);
+    ~AbstractSprite();
 
     virtual void dealEvent(SDL_Event event) = 0;
     virtual void update() = 0;
     virtual void draw() = 0;
     
+    virtual void remove() final;
     virtual Application* app() final;
     virtual AbstractScene* scene() final;
     virtual Renderer* renderer() final;
@@ -44,6 +47,7 @@ public:
     virtual void update();
     virtual void draw();
     
+    Area area();
     void setArea(Area area);
     void setArea(int x,int y,int w,int h);
     void setColor(Color color);
@@ -68,8 +72,10 @@ public:
 	virtual void update();
 	virtual void draw();
 	
+	Area area();
 	void setFont(std::string fontFile,size_t size);
 	void setText(std::string text);
+	void setWText(std::wstring wtext);
 	void setPosition(Position position);
 	void setPosition(int x,int y);
 	void setColor(Color color);
@@ -81,6 +87,7 @@ private:
 	Color color_;
 	Texture* texture_;
 	std::string text_;
+	std::wstring wtext_;
 	
 	static Font* defaultFont_;
 };

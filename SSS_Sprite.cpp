@@ -10,10 +10,23 @@
 namespace sss2d{
 
 // class AbstructSprite {
+/* constructor */
 AbstractSprite::AbstractSprite(AbstractScene* scene)
     : scene_(scene)
 {
     scene->addSprite(this);
+}
+
+/* distructor */
+AbstractSprite::~AbstractSprite()
+{
+    this->scene()->removeSprite(this);
+}
+
+/* remove this sprite from scene */
+void AbstractSprite::remove()// final
+{
+    this->scene()->removeSprite(this);
 }
 
 /* get application */
@@ -170,10 +183,31 @@ void TextSprite::setFont(std::string fontFile,size_t size)
 /* set text */
 void TextSprite::setText(std::string text)
 {
-    this->text_ = text;
+    this->wtext_.clear(); 
+    this->text_  = text;
     SDL_DestroyTexture(this->texture_);
    
-	Surface* surface = renderText(this->font_,this->text_.c_str(),this->color_);
+	Surface* surface = renderUTF8(this->font_,this->text_.c_str(),this->color_);
+	
+	this->texture_ = SDL_CreateTextureFromSurface(this->renderer(),surface);
+	
+	if(this->texture_ == NULL)
+	{
+	    SDL_THROW();
+	}
+	
+	SDL_FreeSurface(surface);
+}
+
+/* set wide character text */
+void TextSprite::setWText(std::wstring wtext)
+{
+    this->text_.clear(); 
+    this->wtext_  = wtext;
+    
+    SDL_DestroyTexture(this->texture_);
+   
+	Surface* surface = renderUTF16(this->font_,this->wtext_.c_str(),this->color_);
 	
 	this->texture_ = SDL_CreateTextureFromSurface(this->renderer(),surface);
 	
@@ -203,7 +237,16 @@ void TextSprite::setColor(Color color)
 {
 	this->color_ = color;
 	SDL_DestroyTexture(this->texture_);
-	Surface* surface = renderText(this->font_,this->text_.c_str(),this->color_);
+	
+	Surface* surface = NULL;
+	if(this->text_.empty())//wide string
+	{
+	    surface = renderUTF16(this->font_,this->wtext_.c_str(),this->color_);
+	}
+	else // string
+	{
+	    surface = renderUTF8(this->font_,this->text_.c_str(),this->color_);
+	}
 	
 	this->texture_ = SDL_CreateTextureFromSurface(this->renderer(),surface);
 	
@@ -224,7 +267,15 @@ void TextSprite::setColor(Uint8 r,Uint8 g,Uint8 b,Uint8 a)
     this->color_.a = a;
     
     SDL_DestroyTexture(this->texture_);
-	Surface* surface = renderText(this->font_,this->text_.c_str(),this->color_);
+	Surface* surface = NULL;
+	if(this->text_.empty())//wide string
+	{
+	    surface = renderUTF16(this->font_,this->wtext_.c_str(),this->color_);
+	}
+	else // string
+	{
+	    surface = renderUTF8(this->font_,this->text_.c_str(),this->color_);
+	}
 	
 	this->texture_ = SDL_CreateTextureFromSurface(this->renderer(),surface);
 	

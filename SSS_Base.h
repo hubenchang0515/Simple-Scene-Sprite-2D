@@ -66,13 +66,22 @@ inline void drawTexture(Renderer* renderer,Texture* texture,Position center)
 	SDL_RenderCopy(renderer,texture,NULL,&area);
 }
 
-inline Surface* renderText(Font* font,std::string text,Color color)
+inline Surface* renderUTF8(Font* font,std::string text,Color color)
 {
     if(font == NULL)
     {
         throw std::runtime_error("Font is nullptr.\n");
     }
     return TTF_RenderUTF8_Blended(font,text.c_str(),color);
+}
+
+inline Surface* renderUTF16(Font* font,std::wstring text,Color color)
+{
+    if(font == NULL)
+    {
+        throw std::runtime_error("Font is nullptr.\n");
+    }
+    return TTF_RenderUNICODE_Blended(font,(Uint16*)text.c_str(),color);
 }
 
 };// namespace sss2d

@@ -31,13 +31,17 @@ Application* AbstractScene::app()// final
 /* add sprite */
 void AbstractScene::addSprite(AbstractSprite* sprite)// final
 {
+    if(sprite->scene() != this)
+    {
+        throw std::runtime_error("Sprite had been added to another scene yet.");
+    }
     this->sprites_.push_back(sprite);
 }
 
 /* remove a sprite */
-void AbstractScene::removeSprite(std::list<AbstractSprite*>::iterator sprite)// final
+void AbstractScene::removeSprite(AbstractSprite* sprite)// final
 {
-    this->sprites_.erase(sprite);
+    this->sprites_.remove(sprite);
 }
 
 /* draw all sprites belong to this scene */
