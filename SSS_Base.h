@@ -24,6 +24,7 @@
 
 namespace sss2d{
 
+typedef Uint32          time_t;
 typedef double          fps_t;
 typedef SDL_Surface	    Surface;
 typedef SDL_Texture     Texture;
@@ -48,16 +49,19 @@ class Application;
 class AbstractScene;
 class AbstractSprite;
 
+/* set draw color */
 inline void setDrawColor(Renderer* renderer,Color color)
 {
     SDL_SetRenderDrawColor(renderer,color.r,color.g,color.b,color.a);
 }
 
+/* fill a ractangle */
 inline void fillArea(Renderer* renderer,Area area)
 {
     SDL_RenderFillRect(renderer,&area);
 }
 
+/* draw a Texture */
 inline void drawTexture(Renderer* renderer,Texture* texture,Position center)
 {
 	int w,h;
@@ -66,6 +70,7 @@ inline void drawTexture(Renderer* renderer,Texture* texture,Position center)
 	SDL_RenderCopy(renderer,texture,NULL,&area);
 }
 
+/* render a UTF8 string */
 inline Surface* renderUTF8(Font* font,std::string text,Color color)
 {
     if(font == NULL)
@@ -75,6 +80,7 @@ inline Surface* renderUTF8(Font* font,std::string text,Color color)
     return TTF_RenderUTF8_Blended(font,text.c_str(),color);
 }
 
+/* render a UTF16 string */
 inline Surface* renderUTF16(Font* font,std::wstring text,Color color)
 {
     if(font == NULL)
@@ -82,6 +88,12 @@ inline Surface* renderUTF16(Font* font,std::wstring text,Color color)
         throw std::runtime_error("Font is nullptr.\n");
     }
     return TTF_RenderUNICODE_Blended(font,(Uint16*)text.c_str(),color);
+}
+
+/* check if 2 area cross */
+inline bool isAreaCross(Area m,Area n)
+{
+    return (m.x - n.x < m.w) && (m.y - n.y < m.h) && (n.x - m.x < n.w) && (n.y - m.y < n.h);
 }
 
 };// namespace sss2d

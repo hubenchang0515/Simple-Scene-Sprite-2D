@@ -54,7 +54,7 @@ Application::Application(std::string title,int width,int height)
     this->fpsLocked_ = true;
 }
 
-/* distructor */
+/* destructor */
 Application::~Application()
 {
     SDL_DestroyRenderer(this->renderer_);

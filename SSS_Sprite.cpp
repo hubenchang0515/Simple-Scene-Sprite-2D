@@ -12,8 +12,8 @@ namespace sss2d{
 // class AbstructSprite {
 /* constructor */
 AbstractSprite::AbstractSprite(AbstractScene* scene)
-    : scene_(scene)
 {
+    this->scene_ = nullptr;
     scene->addSprite(this);
 }
 
@@ -48,6 +48,16 @@ Renderer* AbstractSprite::renderer()// final
 }
 // } class AbstructSprite
 
+
+
+
+
+
+
+
+
+
+
 // class AreaSprite {
 /* constructor */
 AreaSprite::AreaSprite(AbstractScene* scene)
@@ -73,6 +83,12 @@ void AreaSprite::draw()
 {
     setDrawColor(this->renderer(),this->color_);
     fillArea(this->renderer(),this->area_);
+}
+
+/* return area */
+Area AreaSprite::area()
+{
+    return this->area_;
 }
 
 /* set rectangle of AreaSprie */
@@ -107,6 +123,15 @@ void AreaSprite::setColor(Uint8 r,Uint8 g,Uint8 b,Uint8 a)
 // } class AreaSprite
 
 
+
+
+
+
+
+
+
+
+
 // class TextSprite {
 /* static member variable default font */
 Font* TextSprite::defaultFont_ = nullptr;
@@ -133,9 +158,10 @@ TextSprite::TextSprite(AbstractScene* scene)
     this->color_ = COLOR_WHITE; // default color is white
 }
 
-/* distructor */
+/* destructor */
 TextSprite::~TextSprite()
 {
+    SDL_DestroyTexture(this->texture_);
     if(this->font_ != TextSprite::defaultFont_)
     {
         TTF_CloseFont(this->font_);
@@ -162,6 +188,17 @@ void TextSprite::draw()
     	//setDrawColor(this->renderer(),this->color_);
     	drawTexture(this->renderer(),this->texture_,this->position_);
 	}
+}
+
+/* get area */
+Area TextSprite::area()
+{
+    /* get width and height */
+    int w,h;
+	SDL_QueryTexture(this->texture_,NULL,NULL,&w,&h);
+
+    Area area = {this->position_.x - w/2 , this->position_.y - h/2 , w , h};
+    return area;
 }
 
 /* set font */
@@ -200,7 +237,7 @@ void TextSprite::setText(std::string text)
 }
 
 /* set wide character text */
-void TextSprite::setWText(std::wstring wtext)
+void TextSprite::setText(std::wstring wtext)
 {
     this->text_.clear(); 
     this->wtext_  = wtext;
@@ -287,4 +324,245 @@ void TextSprite::setColor(Uint8 r,Uint8 g,Uint8 b,Uint8 a)
 	SDL_FreeSurface(surface);
 }
 // } class TextSprite
+
+
+
+
+
+
+
+
+// class ImageSprite {
+/* constructor */
+ImageSprite::ImageSprite(AbstractScene* scene)
+	: AbstractSprite(scene)
+{
+    this->texture_ = nullptr;
+    this->position_ = { app()->width()/2 , app()->height()/2 }; // default position
+}
+
+/* destructor */
+ImageSprite::~ImageSprite()
+{
+    SDL_DestroyTexture(this->texture_);
+}
+
+/* deal event */
+void ImageSprite::dealEvent(SDL_Event event)
+{
+
+}
+
+/* update sprite */
+void ImageSprite::update()
+{
+
+}
+
+/* draw sprite */
+void ImageSprite::draw()
+{
+    if(this->texture_ != nullptr)
+    {
+    	//setDrawColor(this->renderer(),this->color_);
+    	drawTexture(this->renderer(),this->texture_,this->position_);
+	}
+}
+
+/* return area */
+Area ImageSprite::ImageSprite::area()
+{
+    /* get width and height */
+    int w,h;
+	SDL_QueryTexture(this->texture_,NULL,NULL,&w,&h);
+
+    Area area = {this->position_.x - w/2 , this->position_.y - h/2 , w , h};
+    return area;
+}
+
+/* set image by file */
+void ImageSprite::setImage(std::string file)
+{
+    Surface* surface = IMG_Load(file.c_str());
+    if(surface == nullptr)
+    {
+        IMG_THROW();
+    }
+    
+    this->texture_ = SDL_CreateTextureFromSurface(renderer(),surface);
+    if(this->texture_ == nullptr)
+    {
+        SDL_THROW();
+    }
+    
+    SDL_FreeSurface(surface);
+}
+
+/* set image by surface */
+void ImageSprite::setImage(Surface* surface)
+{
+    this->texture_ = SDL_CreateTextureFromSurface(renderer(),surface);
+    if(this->texture_ == nullptr)
+    {
+        SDL_THROW();
+    }
+}
+
+/* set image by texture */
+void ImageSprite::setImage(Texture* texture)
+{
+    this->texture_ = texture;
+}
+
+/* set position */
+void ImageSprite::setPosition(Position position)
+{
+    this->position_ = position;
+}
+
+/* set position */
+void ImageSprite::setPosition(int x,int y)
+{
+    this->position_.x = x;
+    this->position_.y = y;
+}
+// } class ImageSprite
+
+
+
+
+
+// class AnimeSprite {
+/* constructor */
+AnimeSprite::AnimeSprite(AbstractScene* scene)
+	: AbstractSprite(scene)
+{
+    this->position_ = { app()->width()/2 , app()->height()/2 }; // default position
+    this->interval_ = 200; // default 200ms
+    this->current_ = this->images_.begin();
+}
+
+/* destructor */
+AnimeSprite::~AnimeSprite()
+{
+    for(auto& image : this->images_)
+    {
+        SDL_DestroyTexture(image);
+    }
+}
+
+/* deal event */
+void AnimeSprite::dealEvent(SDL_Event event)
+{
+
+}
+
+/* update sprite */
+void AnimeSprite::update()
+{
+    if(this->images_.empty())
+    {
+        return;
+    }
+    
+    static sss2d::time_t prev = SDL_GetTicks();
+    sss2d::time_t curr = SDL_GetTicks();
+    
+    if(curr - prev > this->interval_) // millisecond passed
+    {
+        this->current_ ++;
+        if(this->current_ == this->images_.end())
+        {
+            this->current_ = this->images_.begin();
+        }
+        prev = curr;
+    }
+}
+
+/* draw sprite */
+void AnimeSprite::draw()
+{
+    drawTexture(this->renderer(),*(this->current_),this->position_);
+}
+
+/* return area */
+Area AnimeSprite::area()
+{
+    /* get width and height */
+    int w,h;
+	SDL_QueryTexture(*(this->current_),NULL,NULL,&w,&h);
+
+    Area area = {this->position_.x - w/2 , this->position_.y - h/2 , w , h};
+    return area;
+}
+
+/* clear all images */
+void AnimeSprite::clearImages()
+{
+    this->images_.clear();
+}
+
+/* add image by file */
+void AnimeSprite::addImage(std::string file)
+{
+    Surface* surface = IMG_Load(file.c_str());
+    if(surface == nullptr)
+    {
+        IMG_THROW();
+    }
+    
+    Texture* texture = SDL_CreateTextureFromSurface(renderer(),surface);
+    if(texture == nullptr)
+    {
+        SDL_THROW();
+    }
+    
+    SDL_FreeSurface(surface);
+    
+    this->images_.push_back(texture);
+    this->current_ = this->images_.begin();
+}
+
+/* add image by surface */
+void AnimeSprite::addImage(Surface* surface)
+{
+    Texture* texture = SDL_CreateTextureFromSurface(renderer(),surface);
+    if(texture == nullptr)
+    {
+        SDL_THROW();
+    }
+    
+    SDL_FreeSurface(surface);
+    
+    this->images_.push_back(texture);
+    this->current_ = this->images_.begin();
+}
+
+/* add image by texture */
+void AnimeSprite::addImage(Texture* texture)
+{
+    this->images_.push_back(texture);
+    this->current_ = this->images_.begin();
+}
+
+/* set position */
+void AnimeSprite::setPosition(Position position)
+{
+    this->position_ = position;
+}
+
+/* set position */
+void AnimeSprite::setPosition(int x,int y)
+{
+    this->position_.x = x;
+    this->position_.y = y;   
+}
+
+/* set interval */
+void AnimeSprite::setInterval(sss2d::time_t ms)
+{
+    this->interval_ = ms;
+}
+
+// } class AnimeSprite
 };// sss2d

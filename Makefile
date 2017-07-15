@@ -1,13 +1,15 @@
+CXX = clang++
+
 libsss2d.a : SSS_Application.o SSS_Scene.o SSS_Sprite.o
 	ar rcs libsss2d.a SSS_Application.o SSS_Scene.o SSS_Sprite.o 
 SSS_Application.o : SSS_Application.cpp SSS_Application.h SSS_Scene.h SSS_Sprite.h SSS_Base.h
-	g++ -c SSS_Application.cpp -std=c++11 -fPIC
+	$(CXX) -c SSS_Application.cpp -std=c++11 -fPIC
 
 SSS_Scene.o : SSS_Scene.cpp SSS_Application.h SSS_Scene.h SSS_Sprite.h SSS_Base.h
-	g++ -c SSS_Scene.cpp -std=c++11 -fPIC
+	$(CXX) -c SSS_Scene.cpp -std=c++11 -fPIC
 
 SSS_Sprite.o : SSS_Sprite.cpp SSS_Application.h SSS_Scene.h SSS_Sprite.h SSS_Base.h
-	g++ -c SSS_Sprite.cpp -std=c++11 -fPIC
+	$(CXX) -c SSS_Sprite.cpp -std=c++11 -fPIC
 
 clean:
 	rm *.o libsss2d.a

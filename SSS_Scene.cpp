@@ -31,11 +31,12 @@ Application* AbstractScene::app()// final
 /* add sprite */
 void AbstractScene::addSprite(AbstractSprite* sprite)// final
 {
-    if(sprite->scene() != this)
+    if(sprite->scene() != nullptr)
     {
         throw std::runtime_error("Sprite had been added to another scene yet.");
     }
     this->sprites_.push_back(sprite);
+    sprite->scene_ = this;
 }
 
 /* remove a sprite */

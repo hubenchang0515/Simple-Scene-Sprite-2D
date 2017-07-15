@@ -18,6 +18,7 @@ namespace sss2d{
 /* Super Class of All Sprite */
 class AbstractSprite
 {
+    friend class AbstractScene;
 public:
     AbstractSprite(AbstractScene* scene = nullptr);
     ~AbstractSprite();
@@ -32,9 +33,12 @@ public:
     virtual Renderer* renderer() final;
 
 private:
-    AbstractScene* const scene_;
+    AbstractScene* scene_;
     Renderer* renderer_;
 };
+
+
+
 
 
 /* Rectangle Color Lump Sprit */
@@ -59,13 +63,16 @@ private:
 };
 
 
+
+
+
 /* Sprite of Text */
 class TextSprite : public AbstractSprite
 {
 public:
 	static void setDefaultFont(std::string fontFile,size_t size);
 	
-	TextSprite(AbstractScene* scene  = nullptr);
+	TextSprite(AbstractScene* scene = nullptr);
 	~TextSprite();
 	
 	virtual void dealEvent(SDL_Event event);
@@ -75,7 +82,7 @@ public:
 	Area area();
 	void setFont(std::string fontFile,size_t size);
 	void setText(std::string text);
-	void setWText(std::wstring wtext);
+	void setText(std::wstring wtext);
 	void setPosition(Position position);
 	void setPosition(int x,int y);
 	void setColor(Color color);
@@ -93,6 +100,64 @@ private:
 };
 
 
+
+
+
+/* ImageSprite */  
+class ImageSprite : public AbstractSprite
+{
+public:
+    ImageSprite(AbstractScene* scene = nullptr);
+    ~ImageSprite();
+    
+    virtual void dealEvent(SDL_Event event);
+	virtual void update();
+	virtual void draw();
+    
+    Area area();
+    void setImage(std::string file);
+    void setImage(Surface* surface);
+    void setImage(Texture* texture);
+    void setPosition(Position position);
+    void setPosition(int x,int y);
+    
+private:
+    Position position_;
+    Texture* texture_;
+};
+
+
+
+
+class AnimeSprite : public AbstractSprite
+{
+public:
+    AnimeSprite(AbstractScene* scene = nullptr);
+    ~AnimeSprite();
+
+    virtual void dealEvent(SDL_Event event);
+	virtual void update();
+	virtual void draw();
+	
+	Area area();
+	void clearImages();
+	void addImage(std::string file);
+    void addImage(Surface* surface);
+    void addImage(Texture* texture);
+    void setPosition(Position position);
+    void setPosition(int x,int y);
+    void setInterval(sss2d::time_t ms);
+	
+private:
+    Position position_;
+    std::list<Texture*> images_;
+    std::list<Texture*>::iterator current_;
+    sss2d::time_t interval_;
+};
+
+
 };// namespace sss2d
+
+
 
 #endif // SSS_SPRITE_H
