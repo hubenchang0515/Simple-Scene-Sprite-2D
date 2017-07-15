@@ -156,6 +156,7 @@ private:
     std::list<Texture*> images_;
     std::list<Texture*>::iterator current_;
     sss2d::time_t interval_;
+    sss2d::time_t prev,curr;
 };
 
 

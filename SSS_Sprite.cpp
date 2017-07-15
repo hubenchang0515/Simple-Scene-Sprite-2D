@@ -476,8 +476,7 @@ void AnimeSprite::update()
     {
         return;
     }
-    
-    static sss2d::time_t prev = SDL_GetTicks();
+
     sss2d::time_t curr = SDL_GetTicks();
     
     if(curr - prev > this->interval_) // millisecond passed
