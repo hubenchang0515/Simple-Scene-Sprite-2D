@@ -77,6 +77,11 @@ g++ -o demo demo.cpp -std=c++11 -lsss2d -lSDL2 -lSDL2_image -lSDL2_ttf
 
 ## Log
 ---
+### 2017-7-15 : Alpha 0.4
+Add ImageSprite to display image.
+Add AnimeSprite to display anime.
+
+---
 ### 2017-7-14 : Alpha 0.3
 Remove static function TextSprite::setFont  
 Remove static function TextSprite::setSize  
