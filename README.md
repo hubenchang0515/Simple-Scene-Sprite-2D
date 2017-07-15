@@ -74,12 +74,18 @@ g++ -o demo demo.cpp -std=c++11 -lsss2d -lSDL2 -lSDL2_image -lSDL2_ttf
 * AbstactSprite  
 * AreaSprite  
 * TextSprite  
+* ImageSprite
+* AnimeSprite
 
 ## Log
 ---
 ### 2017-7-15 : Alpha 0.4
-Add ImageSprite to display image.
-Add AnimeSprite to display anime.
+Add ImageSprite to display image.  
+Add AnimeSprite to display anime.  
+
+#### New Class
+* ImageSprite
+* AnimeSprite
 
 ---
 ### 2017-7-14 : Alpha 0.3
