@@ -499,6 +499,10 @@ Area AnimeSprite::area()
 /* clear all images */
 void AnimeSprite::clearImages()
 {
+    for(auto& image : this->images_)
+    {
+        SDL_DestroyTexture(image);
+    }
     this->images_.clear();
 }
 
