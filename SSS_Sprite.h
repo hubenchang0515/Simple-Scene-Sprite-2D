@@ -80,6 +80,7 @@ public:
 	virtual void draw();
 	
 	Area area();
+	Position position();
 	void setFont(std::string fontFile,size_t size);
 	void setText(std::string text);
 	void setText(std::wstring wtext);
@@ -115,6 +116,7 @@ public:
 	virtual void draw();
     
     Area area();
+	Position position();
     void setImage(std::string file);
     void setImage(Surface* surface);
     void setImage(Texture* texture);
@@ -140,6 +142,7 @@ public:
 	virtual void draw();
 	
 	Area area();
+	Position position();
 	void clearImages();
 	void addImage(std::string file);
     void addImage(Surface* surface);

@@ -201,6 +201,12 @@ Area TextSprite::area()
     return area;
 }
 
+/* return position */
+Position TextSprite::position()
+{
+    return this->position_;
+}
+
 /* set font */
 void TextSprite::setFont(std::string fontFile,size_t size)
 {
@@ -380,6 +386,12 @@ Area ImageSprite::ImageSprite::area()
     return area;
 }
 
+/* return position */
+Position ImageSprite::position()
+{
+    return this->position_;
+}
+
 /* set image by file */
 void ImageSprite::setImage(std::string file)
 {
@@ -494,6 +506,12 @@ Area AnimeSprite::area()
 
     Area area = {this->position_.x - w/2 , this->position_.y - h/2 , w , h};
     return area;
+}
+
+/* return position */
+Position AnimeSprite::position()
+{
+    return this->position_;
 }
 
 /* clear all images */
