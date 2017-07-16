@@ -19,7 +19,7 @@ class AbstractScene
 {
     friend class AbstractSprite;
 public:
-    AbstractScene(Application* app = nullptr);
+    AbstractScene(Application* app);
     
     virtual bool dealEvent(SDL_Event event) = 0;
     virtual bool update() = 0;
@@ -39,18 +39,60 @@ private:
     virtual void removeSprite(AbstractSprite* sprite) final;
 };
 
+
+
+
+
 class Scene : public AbstractScene
 {
 public:
-    Scene(Application* app = nullptr);
+    Scene(Application* app);
+    ~Scene();
     
     bool dealEvent(SDL_Event event);
     bool update();
     bool draw();
     
+    void setBackground(std::string file);
+    void setBackground(Surface* surface);
+    void setBackground(Texture* texture);
+    
 private:
-    //std::list<>
+    Texture* background_;
 };
+
+
+
+
+
+class WideScene : public AbstractScene
+{
+public:
+    WideScene(int width,int height,Application* app);
+    ~WideScene();
+    
+    bool dealEvent(SDL_Event event);
+    bool update();
+    bool draw();
+    
+    int width();
+    int height();
+    void setBackground(std::string file);
+    void setBackground(Surface* surface);
+    void setBackground(Texture* texture);
+    void setFocus(Position focus);
+    void setFocus(int x,int y);
+    Position focus();
+    
+private:
+    const int width_;
+    const int height_;
+    Position focus_;
+    Area visiable_;
+    Texture* background_;
+    Texture* texture_;
+};
+
 
 };// namespace sss2d
 

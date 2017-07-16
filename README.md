@@ -71,6 +71,7 @@ g++ -o demo demo.cpp -std=c++11 -lsss2d -lSDL2 -lSDL2_image -lSDL2_ttf
 * Application    
 * AbstactScene  
 * Scene  
+* WideScene  
 * AbstactSprite  
 * AreaSprite  
 * TextSprite  
@@ -78,6 +79,13 @@ g++ -o demo demo.cpp -std=c++11 -lsss2d -lSDL2 -lSDL2_image -lSDL2_ttf
 * AnimeSprite
 
 ## Log
+---
+### 2017-7-15 : Alpha 0.5
+Add WideScene which can move the visual angle by WideScene::setFocus(int x,int y)  
+
+#### New Class
+* WideScene  
+
 ---
 ### 2017-7-15 : Alpha 0.4
 Add ImageSprite to display image.  

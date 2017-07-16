@@ -48,6 +48,7 @@ Application::Application(std::string title,int width,int height)
     {
         SDL_THROW();
     }
+    SDL_SetRenderDrawBlendMode(renderer(),SDL_BLENDMODE_BLEND);
     
     this->currentScene_ = nullptr;
     this->isWork_ = false;
@@ -96,7 +97,8 @@ void Application::mainLoop()
         
         /********* Draw *********/
         /* clear renderer */
-        SDL_SetRenderDrawColor(this->renderer_,0,0,0,0);
+        SDL_SetRenderTarget(this->renderer_,NULL);       // target : window
+        SDL_SetRenderDrawColor(this->renderer_,0,0,0,0); // color  : black
         SDL_RenderClear(this->renderer_);
         /* update and draw scene */
         if(this->currentScene_ != nullptr)

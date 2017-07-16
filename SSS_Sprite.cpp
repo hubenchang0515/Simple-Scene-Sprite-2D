@@ -139,7 +139,10 @@ Font* TextSprite::defaultFont_ = nullptr;
 /* static member function set default font*/
 void TextSprite::setDefaultFont(std::string fontFile,size_t size)
 {
-	TTF_CloseFont(TextSprite::defaultFont_);
+    if(TextSprite::defaultFont_ != nullptr)
+    {
+	    TTF_CloseFont(TextSprite::defaultFont_);
+	}
 	TextSprite::defaultFont_ = TTF_OpenFont(fontFile.c_str(),size);
 	
 	if(TextSprite::defaultFont_ == nullptr)
@@ -161,7 +164,10 @@ TextSprite::TextSprite(AbstractScene* scene)
 /* destructor */
 TextSprite::~TextSprite()
 {
-    SDL_DestroyTexture(this->texture_);
+    if(this->texture_ == nullptr)
+    {
+        SDL_DestroyTexture(this->texture_);
+    }
     if(this->font_ != TextSprite::defaultFont_)
     {
         TTF_CloseFont(this->font_);
@@ -185,7 +191,6 @@ void TextSprite::draw()
 {
     if(this->texture_ != nullptr)
     {
-    	//setDrawColor(this->renderer(),this->color_);
     	drawTexture(this->renderer(),this->texture_,this->position_);
 	}
 }
@@ -210,7 +215,7 @@ Position TextSprite::position()
 /* set font */
 void TextSprite::setFont(std::string fontFile,size_t size)
 {
-    if(this->font_ != TextSprite::defaultFont_)
+    if(this->font_ != nullptr &&this->font_ != TextSprite::defaultFont_)
     {
         TTF_CloseFont(this->font_);
     }
@@ -228,8 +233,12 @@ void TextSprite::setText(std::string text)
 {
     this->wtext_.clear(); 
     this->text_  = text;
-    SDL_DestroyTexture(this->texture_);
-   
+    
+    if(this->texture_ != nullptr)
+    {
+        SDL_DestroyTexture(this->texture_);
+    }
+    
 	Surface* surface = renderUTF8(this->font_,this->text_.c_str(),this->color_);
 	
 	this->texture_ = SDL_CreateTextureFromSurface(this->renderer(),surface);
@@ -248,7 +257,10 @@ void TextSprite::setText(std::wstring wtext)
     this->text_.clear(); 
     this->wtext_  = wtext;
     
-    SDL_DestroyTexture(this->texture_);
+    if(this->texture_ != nullptr)
+    {
+        SDL_DestroyTexture(this->texture_);
+    }
    
 	Surface* surface = renderUTF16(this->font_,this->wtext_.c_str(),this->color_);
 	
@@ -279,7 +291,11 @@ void TextSprite::setPosition(int x,int y)
 void TextSprite::setColor(Color color)
 {
 	this->color_ = color;
-	SDL_DestroyTexture(this->texture_);
+	
+	if(this->texture_ != nullptr)
+    {
+        SDL_DestroyTexture(this->texture_);
+    }
 	
 	Surface* surface = NULL;
 	if(this->text_.empty())//wide string
@@ -309,7 +325,11 @@ void TextSprite::setColor(Uint8 r,Uint8 g,Uint8 b,Uint8 a)
     this->color_.b = b;
     this->color_.a = a;
     
-    SDL_DestroyTexture(this->texture_);
+    if(this->texture_ != nullptr)
+    {
+        SDL_DestroyTexture(this->texture_);
+    }
+    
 	Surface* surface = NULL;
 	if(this->text_.empty())//wide string
 	{
@@ -350,7 +370,10 @@ ImageSprite::ImageSprite(AbstractScene* scene)
 /* destructor */
 ImageSprite::~ImageSprite()
 {
-    SDL_DestroyTexture(this->texture_);
+    if(this->texture_ != nullptr)
+    {
+        SDL_DestroyTexture(this->texture_);
+    }
 }
 
 /* deal event */
@@ -370,7 +393,6 @@ void ImageSprite::draw()
 {
     if(this->texture_ != nullptr)
     {
-    	//setDrawColor(this->renderer(),this->color_);
     	drawTexture(this->renderer(),this->texture_,this->position_);
 	}
 }
@@ -401,6 +423,11 @@ void ImageSprite::setImage(std::string file)
         IMG_THROW();
     }
     
+    if(this->texture_ != nullptr)
+    {
+        SDL_DestroyTexture(this->texture_);
+    }
+    
     this->texture_ = SDL_CreateTextureFromSurface(renderer(),surface);
     if(this->texture_ == nullptr)
     {
@@ -413,6 +440,11 @@ void ImageSprite::setImage(std::string file)
 /* set image by surface */
 void ImageSprite::setImage(Surface* surface)
 {
+    if(this->texture_ != nullptr)
+    {
+        SDL_DestroyTexture(this->texture_);
+    }    
+    
     this->texture_ = SDL_CreateTextureFromSurface(renderer(),surface);
     if(this->texture_ == nullptr)
     {
@@ -423,6 +455,11 @@ void ImageSprite::setImage(Surface* surface)
 /* set image by texture */
 void ImageSprite::setImage(Texture* texture)
 {
+    if(this->texture_ != nullptr)
+    {
+        SDL_DestroyTexture(this->texture_);
+    }
+
     this->texture_ = texture;
 }
 
