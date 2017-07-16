@@ -79,7 +79,10 @@ private:
     
     void mainLoop();
     
-    static Uint32 fpsTimerCallback(Uint32 interval,void* mutex);
+    SDL_sem* fpsSem_;
+    
+    static Uint32 fpsTimerCallback(Uint32 interval,void* app);
+    static int eventThread(void* app);
 
 };
 

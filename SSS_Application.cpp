@@ -53,11 +53,15 @@ Application::Application(std::string title,int width,int height)
     this->currentScene_ = nullptr;
     this->isWork_ = false;
     this->fpsLocked_ = true;
+    
+    fpsSem_ = SDL_CreateSemaphore(0);
+    
 }
 
 /* destructor */
 Application::~Application()
 {
+    SDL_DestroySemaphore(fpsSem_);
     SDL_DestroyRenderer(this->renderer_);
     SDL_DestroyWindow(this->window_);
     TTF_Quit();
@@ -70,6 +74,7 @@ void Application::start(fps_t fps)
 {
     this->isWork_ = true;
     this->fps_ = fps > 0 ? fps : 60;
+    SDL_CreateThread(eventThread,"Event Thread",this);
     mainLoop();
 }
 
@@ -89,7 +94,7 @@ void Application::setScene(AbstractScene* scene)
 void Application::mainLoop()
 {
     Uint32 ticks = SDL_GetTicks(); // used to count real fps
-    SDL_Event event;// used to poll event
+    
     while(this->isWork_)
     {
         /* start a timer to hold fps */
@@ -103,15 +108,6 @@ void Application::mainLoop()
         /* update and draw scene */
         if(this->currentScene_ != nullptr)
         {
-            /* send event to scene */
-            while(!this->events_.empty())
-            {
-                if(this->currentScene_->dealEvent(this->events_.front()) == false)
-                {
-                    throw std::runtime_error("Method 'dealEvent' of current scene false.\n");
-                }
-                this->events_.pop_front();
-            }
             /* update scene */
             if(this->currentScene_->update() == false)
             {
@@ -127,22 +123,11 @@ void Application::mainLoop()
         SDL_RenderPresent(renderer_);
         /************************/
         
-        /* lock to hold fps */
-        do{
-            /* poll SDL2 event */
-            int e = SDL_PollEvent(&event);
-            /* exit while poll quit event */
-            if(event.type == SDL_QUIT)
-            {
-                this->exit();
-                break;
-            }
-            else if(e != 0)
-            {
-                this->events_.push_back(event);
-            }
-        }while(fpsLocked_);
-        fpsLocked_ = true;
+        /* block to hold fps */
+        if(SDL_SemWait(fpsSem_) != 0)
+        {
+            SDL_THROW();
+        }
         SDL_RemoveTimer(fpsTimer);
         
         /* count real fps */
@@ -151,10 +136,38 @@ void Application::mainLoop()
     }
 }
 
+/* static funtions */
+
 /* FPS Timer Callback */
 Uint32 Application::fpsTimerCallback(Uint32 interval,void* app)
 {
-    ((Application*)app)->fpsLocked_ = false;
+    Application* self = static_cast<Application*>(app);
+    SDL_SemPost(self->fpsSem_);
     return interval;
+}
+
+/* the thread poll event */
+int Application::eventThread(void* app)
+{
+    Application* self = static_cast<Application*>(app);
+    SDL_Event event;// used to poll event
+    
+    while(1)
+    {
+        /* wait SDL2 event */
+        int e = SDL_WaitEvent(&event);
+        /* exit while get quit event */
+        if(event.type == SDL_QUIT)
+        {
+            self->exit();
+            SDL_SemPost(self->fpsSem_);
+            break;
+        }
+        else if(e != 0)
+        {
+            self->currentScene_->dealEvent(event);
+        }
+    }
+    return 0;
 }
 };//sss2d

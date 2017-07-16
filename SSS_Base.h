@@ -25,7 +25,7 @@
 namespace sss2d{
 
 typedef Uint32          time_t;
-typedef double          fps_t;
+typedef size_t          fps_t;
 typedef SDL_Surface	    Surface;
 typedef SDL_Texture     Texture;
 typedef SDL_Renderer    Renderer;
