@@ -102,7 +102,7 @@ void Application::mainLoop()
         
         /********* Draw *********/
         /* clear renderer */
-        SDL_SetRenderTarget(this->renderer_,NULL);       // target : window
+        SDL_SetRenderTarget(this->renderer_,nullptr);       // target : window
         SDL_SetRenderDrawColor(this->renderer_,0,0,0,0); // color  : black
         SDL_RenderClear(this->renderer_);
         /* update and draw scene */

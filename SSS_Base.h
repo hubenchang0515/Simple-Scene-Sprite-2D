@@ -65,15 +65,15 @@ inline void fillArea(Renderer* renderer,Area area)
 inline void drawTexture(Renderer* renderer,Texture* texture,Position center)
 {
 	int w,h;
-	SDL_QueryTexture(texture,NULL,NULL,&w,&h);
+	SDL_QueryTexture(texture,nullptr,nullptr,&w,&h);
 	Area area = {center.x - w/2, center.y - h/2, w, h};
-	SDL_RenderCopy(renderer,texture,NULL,&area);
+	SDL_RenderCopy(renderer,texture,nullptr,&area);
 }
 
 /* render a UTF8 string */
 inline Surface* renderUTF8(Font* font,std::string text,Color color)
 {
-    if(font == NULL)
+    if(font == nullptr)
     {
         throw std::runtime_error("Font is nullptr.\n");
     }
@@ -83,7 +83,7 @@ inline Surface* renderUTF8(Font* font,std::string text,Color color)
 /* render a UTF16 string */
 inline Surface* renderUTF16(Font* font,std::wstring text,Color color)
 {
-    if(font == NULL)
+    if(font == nullptr)
     {
         throw std::runtime_error("Font is nullptr.\n");
     }

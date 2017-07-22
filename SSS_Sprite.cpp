@@ -200,7 +200,7 @@ Area TextSprite::area()
 {
     /* get width and height */
     int w,h;
-	SDL_QueryTexture(this->texture_,NULL,NULL,&w,&h);
+	SDL_QueryTexture(this->texture_,nullptr,nullptr,&w,&h);
 
     Area area = {this->position_.x - w/2 , this->position_.y - h/2 , w , h};
     return area;
@@ -243,7 +243,7 @@ void TextSprite::setText(std::string text)
 	
 	this->texture_ = SDL_CreateTextureFromSurface(this->renderer(),surface);
 	
-	if(this->texture_ == NULL)
+	if(this->texture_ == nullptr)
 	{
 	    SDL_THROW();
 	}
@@ -266,7 +266,7 @@ void TextSprite::setText(std::wstring wtext)
 	
 	this->texture_ = SDL_CreateTextureFromSurface(this->renderer(),surface);
 	
-	if(this->texture_ == NULL)
+	if(this->texture_ == nullptr)
 	{
 	    SDL_THROW();
 	}
@@ -297,7 +297,7 @@ void TextSprite::setColor(Color color)
         SDL_DestroyTexture(this->texture_);
     }
 	
-	Surface* surface = NULL;
+	Surface* surface = nullptr;
 	if(this->text_.empty())//wide string
 	{
 	    surface = renderUTF16(this->font_,this->wtext_.c_str(),this->color_);
@@ -309,7 +309,7 @@ void TextSprite::setColor(Color color)
 	
 	this->texture_ = SDL_CreateTextureFromSurface(this->renderer(),surface);
 	
-	if(this->texture_ == NULL)
+	if(this->texture_ == nullptr)
 	{
 	    SDL_THROW();
 	}
@@ -330,7 +330,7 @@ void TextSprite::setColor(Uint8 r,Uint8 g,Uint8 b,Uint8 a)
         SDL_DestroyTexture(this->texture_);
     }
     
-	Surface* surface = NULL;
+	Surface* surface = nullptr;
 	if(this->text_.empty())//wide string
 	{
 	    surface = renderUTF16(this->font_,this->wtext_.c_str(),this->color_);
@@ -342,7 +342,7 @@ void TextSprite::setColor(Uint8 r,Uint8 g,Uint8 b,Uint8 a)
 	
 	this->texture_ = SDL_CreateTextureFromSurface(this->renderer(),surface);
 	
-	if(this->texture_ == NULL)
+	if(this->texture_ == nullptr)
 	{
 	    SDL_THROW();
 	}
@@ -402,7 +402,7 @@ Area ImageSprite::ImageSprite::area()
 {
     /* get width and height */
     int w,h;
-	SDL_QueryTexture(this->texture_,NULL,NULL,&w,&h);
+	SDL_QueryTexture(this->texture_,nullptr,nullptr,&w,&h);
 
     Area area = {this->position_.x - w/2 , this->position_.y - h/2 , w , h};
     return area;
@@ -538,7 +538,7 @@ Area AnimeSprite::area()
 {
     /* get width and height */
     int w,h;
-	SDL_QueryTexture(*(this->current_),NULL,NULL,&w,&h);
+	SDL_QueryTexture(*(this->current_),nullptr,nullptr,&w,&h);
 
     Area area = {this->position_.x - w/2 , this->position_.y - h/2 , w , h};
     return area;

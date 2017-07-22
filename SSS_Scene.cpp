@@ -114,10 +114,10 @@ bool Scene::update()
 
 bool Scene::draw()
 {
-    SDL_SetRenderTarget(renderer(),NULL);// target : window
+    SDL_SetRenderTarget(renderer(),nullptr);// target : window
     if(this->background_ != nullptr)
     {
-        SDL_RenderCopy(renderer(),this->background_,NULL,NULL);
+        SDL_RenderCopy(renderer(),this->background_,nullptr,nullptr);
     }
     drawSprites();
     return true;
@@ -229,13 +229,13 @@ bool WideScene::draw()
     SDL_RenderClear(renderer());
     if(this->background_ != nullptr)
     {
-        SDL_RenderCopy(renderer(),this->background_,NULL,NULL);
+        SDL_RenderCopy(renderer(),this->background_,nullptr,nullptr);
     }
     
     drawSprites();
     
-    SDL_SetRenderTarget(renderer(),NULL); /// target : window
-    SDL_RenderCopy(renderer(),this->texture_,&this->visiable_,NULL);
+    SDL_SetRenderTarget(renderer(),nullptr); /// target : window
+    SDL_RenderCopy(renderer(),this->texture_,&this->visiable_,nullptr);
     
     return true;
 }

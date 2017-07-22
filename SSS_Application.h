@@ -30,7 +30,7 @@ public:
     int width()  
     {
         int w; 
-        SDL_GetWindowSize(this->window_,&w,NULL);
+        SDL_GetWindowSize(this->window_,&w,nullptr);
         return w; 
     }
     
@@ -38,7 +38,7 @@ public:
     int height() 
     {
         int h; 
-        SDL_GetWindowSize(this->window_,NULL,&h); 
+        SDL_GetWindowSize(this->window_,nullptr,&h); 
         return h; 
     }
     

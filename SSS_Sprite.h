@@ -20,7 +20,7 @@ class AbstractSprite
 {
     friend class AbstractScene;
 public:
-    AbstractSprite(AbstractScene* scene = nullptr);
+    AbstractSprite(AbstractScene* scene);
     ~AbstractSprite();
 
     virtual void dealEvent(SDL_Event event) = 0;
@@ -45,7 +45,7 @@ private:
 class AreaSprite : public AbstractSprite
 {
 public:
-    AreaSprite(AbstractScene* scene = nullptr);
+    AreaSprite(AbstractScene* scene);
 
     virtual void dealEvent(SDL_Event event);
     virtual void update();
@@ -72,7 +72,7 @@ class TextSprite : public AbstractSprite
 public:
 	static void setDefaultFont(std::string fontFile,size_t size);
 	
-	TextSprite(AbstractScene* scene = nullptr);
+	TextSprite(AbstractScene* scene);
 	~TextSprite();
 	
 	virtual void dealEvent(SDL_Event event);
@@ -108,7 +108,7 @@ private:
 class ImageSprite : public AbstractSprite
 {
 public:
-    ImageSprite(AbstractScene* scene = nullptr);
+    ImageSprite(AbstractScene* scene);
     ~ImageSprite();
     
     virtual void dealEvent(SDL_Event event);
@@ -134,7 +134,7 @@ private:
 class AnimeSprite : public AbstractSprite
 {
 public:
-    AnimeSprite(AbstractScene* scene = nullptr);
+    AnimeSprite(AbstractScene* scene);
     ~AnimeSprite();
 
     virtual void dealEvent(SDL_Event event);
