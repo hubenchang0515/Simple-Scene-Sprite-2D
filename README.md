@@ -1,6 +1,6 @@
 # Simple-Scene-Sprite-2D
-A minimum game engine based on SDL2
-* ALPHA version now , cannot work.
+A fake game engine based on SDL2
+* ALPHA version now , cannot work well.
 
 ## Getting Start
 ### Install dependent library
