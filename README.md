@@ -1,6 +1,6 @@
 # Simple-Scene-Sprite-2D
 A fake game engine based on SDL2
-* Abandoned now , will be rebuilt future.
+* Abandoned now
 
 ## Getting Start
 ### Install dependent library
