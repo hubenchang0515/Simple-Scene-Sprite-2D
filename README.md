@@ -1,5 +1,5 @@
 # Simple-Scene-Sprite-2D
-A fake game engine based on SDL2
+A fake ugly game engine based on SDL2
 * Abandoned now
 
 ## Getting Start
